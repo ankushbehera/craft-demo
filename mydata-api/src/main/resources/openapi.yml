@@ -22,35 +22,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Documents'
-      x-codegen-request-body-name: document
-  /mydata/{id}:
-    put:
-      summary: Add new document
-      operationId: addDocument
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-            format: 128bit UTF-8
-            example: 2aa33f3r5
-          required: true
-          description: timestamp
-      requestBody:
-        description: addDocument
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Document'
-        required: true
-      responses:
-        200:
-          description: Document Added
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Document'
-      x-codegen-request-body-name: document
+      x-codegen-request-body-name: documents
   /mydata/{timestamp}/{key}/{value}:
     get:
       summary: Get list of ids matching the key, value, timestamp
