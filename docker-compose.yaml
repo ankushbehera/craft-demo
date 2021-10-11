@@ -25,6 +25,7 @@ services:
     environment:
       SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb:27017/mydata?authSource=admin"
       SERVER_PORT: 8585
+      JAVA_OPTIONS: "-XX:+UseG1GC"
   mydata-load-test:
     build:
       context: ./mydata-load-test
