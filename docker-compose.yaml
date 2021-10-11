@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "password"
+  craft-demo-app:
+    build:
+      context: ./mydata-app
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 512M
+        reservations:
+          cpus: 0.50
+          memory: 128M
+    ports:
+      - "8585:8585"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb:27017/mydata?authSource=admin"
+      SERVER_PORT: 8585
+  mydata-load-test:
+    build:
+      context: ./mydata-load-test
+    depends_on:
+      - craft-demo-app

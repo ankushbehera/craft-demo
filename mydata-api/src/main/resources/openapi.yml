@@ -1,0 +1,138 @@
+openapi: 3.0.1
+info:
+  title: Craft Demo
+  description: MyData API
+  version: 1.0.0
+paths:
+  /mydata:
+    put:
+      summary: Add new documents
+      operationId: addDocuments
+      requestBody:
+        description: addDocuments
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Documents'
+        required: true
+      responses:
+        200:
+          description: Documents Added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+      x-codegen-request-body-name: document
+  /mydata/{id}:
+    put:
+      summary: Add new document
+      operationId: addDocument
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: 128bit UTF-8
+            example: 2aa33f3r5
+          required: true
+          description: timestamp
+      requestBody:
+        description: addDocument
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+        required: true
+      responses:
+        200:
+          description: Document Added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+      x-codegen-request-body-name: document
+  /mydata/{timestamp}/{key}/{value}:
+    get:
+      summary: Get list of ids matching the key, value, timestamp
+      operationId: getIds
+      parameters:
+        - in: path
+          name: timestamp
+          schema:
+            type: integer
+            format: int64
+            example: 1633535440
+          required: true
+          description: timestamp
+        - in: path
+          name: key
+          schema:
+            type: string
+            maxLength: 256
+            example: a21kjllj
+          required: true
+          description: key
+        - in: path
+          name: value
+          schema:
+            type: string
+            maxLength: 256
+            example: lsallaksd
+          required: true
+          description: value
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ids'
+
+components:
+  schemas:
+    Ids:
+      type: array
+      items:
+        type: string
+      description: List of ids matching the key, value, timestamp
+      example: ["123","456"]
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+          format: 128bit UTF-8
+          example: 2aa33f3r5
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        timestamp:
+          type: integer
+          format: int64
+          example: 1633535440
+      required:
+        - id
+        - attributes
+    Attributes:
+      type: array
+      items:
+        $ref: '#/components/schemas/Attribute'
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+          maxLength: 256
+          minLength: 1
+          example: a21kjl23a
+        value:
+          type: string
+          maxLength: 256
+          minLength: 1
+          example: a4llak42q
+      required:
+        - key
+        - value
