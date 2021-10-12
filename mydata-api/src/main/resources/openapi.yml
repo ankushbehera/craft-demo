@@ -3,6 +3,8 @@ info:
   title: Craft Demo
   description: MyData API
   version: 1.0.0
+servers:
+  - url: http://localhost:8081/mydata
 paths:
   /mydata:
     put:
